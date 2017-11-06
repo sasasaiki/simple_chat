@@ -1,0 +1,25 @@
+doctype html
+
+html(lang="ja")
+
+  - var title = "タイトル";
+  - var myScripts=[];
+  - var myStyles=["/public/css/landing.css"];
+  include ../templete/_head.pug
+
+  header.jumbotron
+    div.container
+      div.row 
+        h1 It worksss!
+          p
+
+  body
+
+    div.container
+      div.row
+        div.span6 {{template "flash.html" .}}
+
+    div.test-text testttest
+    
+  include ../templete/_footer.pug
+
