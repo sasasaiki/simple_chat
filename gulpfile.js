@@ -15,7 +15,7 @@ gulp.task('pug', () => {
         .pipe(pug({
             pretty: true
         }))
-        .pipe(gulp.dest('./app/views/'));
+        .pipe(gulp.dest('./views/'));
 });
 
 
