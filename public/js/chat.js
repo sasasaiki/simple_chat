@@ -72,28 +72,47 @@ module.exports = __webpack_require__(1);
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var hoge = __webpack_require__(2);
-hoge.func1();
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-function func1() {
-    alert('外部のモジュールだよ');
+$(function () {
+    init();
+});
+var socket = null;
+function init() {
+    var $msgBox = $("#chatbox textarea");
+    var $messages = $("#messages");
+    var $chatBox = $("#chatbox");
+    $chatBox.submit(function () { return doChat($msgBox, $messages); });
+    setWebSocket($messages);
 }
-exports.func1 = func1;
+function doChat($msgBox, $messages) {
+    if (!$msgBox.val())
+        return false;
+    if (!socket) {
+        alert("エラー:WebSocket接続が行われていません");
+    }
+    socket.send($msgBox.val());
+    $msgBox.val("");
+    console.log("sendしました");
+    return false;
+}
+function setWebSocket($messages) {
+    if (!window["WebSocket"]) {
+        alert("エラー:対応していないブラウザです");
+    }
+    else {
+        socket = new WebSocket("ws://localhost:8080/room");
+        socket.onclose = function () {
+            console.log("接続が終了しました");
+        };
+        socket.onmessage = function (e) {
+            $messages.append($("<li>").text(e.data));
+            console.log("onmessages");
+        };
+    }
+}
 
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=../map/typeScriptMap/test.js.map
+//# sourceMappingURL=../map/typeScriptMap/chat.js.map

@@ -4,12 +4,10 @@ head
   meta(name="viewport" content="width=device-width, initial-scale=1")
   link(href="/public/img/favicon.png" rel="shortcut icon")
 
-  link(href="/public/css/bootstrap-3.3.6.min.css", rel="stylesheet")
   each css in myStyles
     link(href= css,rel="stylesheet")
 
-  script(src="/public/js/jquery-2.2.4.min.js")
-  script(src="/public/js/bootstrap-3.3.6.min.js")
+  script(src= "https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js")
   each script in myScripts
     script(src= script)
   

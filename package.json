@@ -34,5 +34,8 @@
     "vinyl-named": "^1.1.0",
     "webpack": "^2.1.0-beta.22",
     "webpack-stream": "^4.0.0"
+  },
+  "dependencies": {
+    "@types/jquery": "^3.2.16"
   }
 }

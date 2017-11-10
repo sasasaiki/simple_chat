@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -22,11 +23,14 @@ func (r *room) run() {
 	for {
 		select {
 		case client := <-r.join:
+			fmt.Println("join")
 			r.clients[client] = true
 		case client := <-r.leave:
+			fmt.Println("leave")
 			delete(r.clients, client)
 			close(client.send)
 		case msg := <-r.forword:
+			fmt.Println("announce")
 			announceMessageForAll(r, msg)
 		}
 	}
@@ -36,8 +40,10 @@ func announceMessageForAll(r *room, msg []byte) {
 	for client := range r.clients {
 		select {
 		case client.send <- msg:
+			fmt.Println("send")
 			//メッセージを送信
 		default:
+			fmt.Println("close")
 			delete(r.clients, client)
 			close(client.send)
 		}

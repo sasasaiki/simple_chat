@@ -11,7 +11,10 @@ import (
 
 func main() {
 	r := newRoom()
-	http.Handle("/", &templeteHandler{fileName: "chat.html"})
+
+	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public/"))))
+
+	http.Handle("/", &templeteHandler{fileName: "chat/chat.html"})
 	//ルームを作る
 	http.Handle("/room", r)
 	//チャットルームを開始
@@ -26,7 +29,7 @@ func main() {
 func (t *templeteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	t.once.Do(func() {
 		t.templ =
-			template.Must(template.ParseFiles(filepath.Join("templates",
+			template.Must(template.ParseFiles(filepath.Join("views",
 				t.fileName)))
 		fmt.Println("テンプレートの読み込み")
 	})
