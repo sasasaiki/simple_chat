@@ -82,19 +82,17 @@ function init() {
     var $msgBox = $("#chatbox textarea");
     var $messages = $("#messages");
     var $chatBox = $("#chatbox");
-    $chatBox.submit(function () { return doChat($msgBox, $messages); });
+    $chatBox.submit(function () { doChat($msgBox, $messages); return false; });
     setWebSocket($messages);
 }
 function doChat($msgBox, $messages) {
     if (!$msgBox.val())
-        return false;
-    if (!socket) {
-        alert("エラー:WebSocket接続が行われていません");
-    }
+        if (!socket) {
+            alert("エラー:WebSocket接続が行われていません");
+        }
     socket.send($msgBox.val());
     $msgBox.val("");
     console.log("sendしました");
-    return false;
 }
 function setWebSocket($messages) {
     if (!window["WebSocket"]) {

@@ -10,12 +10,12 @@ function init() {
   let $chatBox = $("#chatbox")
 
 
-  $chatBox.submit(function() :boolean{ return doChat($msgBox,$messages)})
+  $chatBox.submit(function() :boolean{doChat($msgBox,$messages);return false;})
   setWebSocket($messages)
 }
 
-function doChat($msgBox :JQuery,$messages:JQuery) :boolean{
-  if(!$msgBox.val()) return false
+function doChat($msgBox :JQuery,$messages:JQuery){
+  if(!$msgBox.val())
   if(!socket) {
     alert("エラー:WebSocket接続が行われていません")
 
@@ -24,8 +24,6 @@ function doChat($msgBox :JQuery,$messages:JQuery) :boolean{
   socket.send($msgBox.val())
   $msgBox.val("")
   console.log("sendしました")
-  
-  return false
 }
 
 function setWebSocket($messages:JQuery) {
